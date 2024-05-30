@@ -3,10 +3,13 @@ package FedericoCogoni;
 import FedericoCogoni.entities.Customer;
 import FedericoCogoni.entities.Order;
 import FedericoCogoni.entities.Product;
+import com.github.javafaker.Faker;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class Application {
 
@@ -15,6 +18,8 @@ public class Application {
     static List<Order> orders = new ArrayList<>();
 
     public static void main(String[] args) {
+        Faker faker = new Faker();
+        System.out.println(faker.address().city());
         initializeWarehouse();
         createCustomers();
         placeOrders();
@@ -35,6 +40,7 @@ public class Application {
         System.out.println("---------------------------------- ES 4 merc------------------------------------");
         getTier2Products().forEach(System.out::println);*/
         System.out.println("---------------------------------- ES 1 gio------------------------------------");
+
         System.out.println("---------------------------------- ES 2 gio------------------------------------");
         System.out.println("---------------------------------- ES 3 gio------------------------------------");
         System.out.println("---------------------------------- ES 4 gio------------------------------------");
