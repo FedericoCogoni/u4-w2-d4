@@ -6,10 +6,8 @@ import FedericoCogoni.entities.Product;
 import com.github.javafaker.Faker;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Application {
 
@@ -24,13 +22,13 @@ public class Application {
         createCustomers();
         placeOrders();
 
-        System.out.println("--------------------------------- PRODUCTS ----------------------------------");
+      /*  System.out.println("--------------------------------- PRODUCTS ----------------------------------");
         warehouse.forEach(System.out::println);
         System.out.println("--------------------------------- CUSTOMERS ----------------------------------");
         customers.forEach(System.out::println);
         System.out.println("--------------------------------- ORDERS ----------------------------------");
         orders.forEach(System.out::println);
-/*
+
         System.out.println("---------------------------------- ES 1 merc------------------------------------");
         getBooks().forEach(System.out::println);
         System.out.println("---------------------------------- ES 2 merc------------------------------------");
@@ -40,9 +38,24 @@ public class Application {
         System.out.println("---------------------------------- ES 4 merc------------------------------------");
         getTier2Products().forEach(System.out::println);*/
         System.out.println("---------------------------------- ES 1 gio------------------------------------");
-
+        Map<Customer, List<Order>> ordersByCustomer = orders.stream()
+                .collect(Collectors.groupingBy(Order::getCustomer));
+        ordersByCustomer.forEach((customer, ordersList) -> {
+            System.out.println("Cliente: " + customer);
+            ordersList.forEach(System.out::println);
+        });
         System.out.println("---------------------------------- ES 2 gio------------------------------------");
+        Map<Customer, Double> customerTotal = orders.stream()
+                .collect(Collectors.groupingBy(
+                        Order::getCustomer,
+                        Collectors.summingDouble(order -> order.getProducts().stream().mapToDouble(Product::getPrice).sum())
+                ));
+
+        customerTotal.forEach((customer, totalSales) -> {
+            System.out.println("Cliente: " + customer + ", Totale Vendite: " + totalSales);
+        });
         System.out.println("---------------------------------- ES 3 gio------------------------------------");
+        
         System.out.println("---------------------------------- ES 4 gio------------------------------------");
         System.out.println("---------------------------------- ES 5 gio------------------------------------");
         System.out.println("---------------------------------- ES 6 gio------------------------------------");
